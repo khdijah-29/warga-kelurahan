@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Pengaduan</title>
+</head>
+<body>
+    <h1>Daftar Pengaduan</h1>
+
+    <ul>
+        {% for pengaduan in pengaduan_list %}
+            <li>
+                <strong>{{ pengaduan.judul }}</strong><br>
+                Pelapor: {{ pengaduan.pelapor.nama_lengkap }}
+            </li>
+        {% empty %}
+            <li>Tidak ada pengaduan yang terdaftar.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'warga-list' %}">← Kembali ke Daftar Warga</a>
+</body>
+</html>

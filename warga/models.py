@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Warga(models.Model):
     nik = models.CharField(max_length=16, unique=True, verbose_name="Nomor Induk Kependudukan")
     nama_lengkap = models.CharField(max_length=100, verbose_name="Nama Lengkap")

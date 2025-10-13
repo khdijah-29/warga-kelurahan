@@ -6,6 +6,9 @@
 <body>
     <h1>Daftar Warga</h1>
 
+    <a href="{% url 'warga-tambah' %}">Tambah Warga Baru</a>
+    <hr>
+
     {% if warga_list %}
         <ul>
             {% for warga in warga_list %}

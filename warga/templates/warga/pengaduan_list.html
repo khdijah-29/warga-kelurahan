@@ -6,12 +6,22 @@
 <body>
     <h1>Daftar Pengaduan</h1>
 
+    <!-- Tombol untuk menambah pengaduan baru -->
+    <a href="{% url 'pengaduan-tambah' %}">+ Tambah Pengaduan Baru</a>
+    <br><br>
+
     <ul>
         {% for pengaduan in pengaduan_list %}
             <li>
                 <strong>{{ pengaduan.judul }}</strong><br>
-                Pelapor: {{ pengaduan.pelapor.nama_lengkap }}
+                Pelapor: {{ pengaduan.warga.nama_lengkap }} <br>
+                Deskripsi: {{ pengaduan.deskripsi }} <br>
+
+                <!-- Tombol Edit & Hapus -->
+                <a href="{% url 'pengaduan_edit' pengaduan.pk %}">Edit</a> |
+                <a href="{% url 'pengaduan_delete' pengaduan.pk %}">Hapus</a>
             </li>
+            <hr>
         {% empty %}
             <li>Tidak ada pengaduan yang terdaftar.</li>
         {% endfor %}

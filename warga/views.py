@@ -2,10 +2,13 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView,UpdateView, DeleteView
 from .models import Warga, Pengaduan
-from .forms import WargaForm, PengaduanForm
 from rest_framework.generics import ListAPIView,RetrieveAPIView
 from .serializers import WargaSerializer, PengaduanSerializer
-
+from .forms import WargaForm, PengaduanForm
+from rest_framework import viewsets
+from .serializers import WargaSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.filters import SearchFilter, OrderingFilter 
 
 class WargaListView(ListView):
     model = Warga
@@ -68,3 +71,24 @@ class PengaduanListlAPIView(ListAPIView):
 class PengaduanDetailAPIView(RetrieveAPIView):
     queryset = Pengaduan.objects.all()
     serializer_class = PengaduanSerializer      
+
+class WargaViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Warga.objects.all().order_by('-tanggal_registrasi')
+    serializer_class = WargaSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['nama_lengkap', 'nik', 'alamat']
+    ordering_fields = ['nama_lengkap', 'tanggal_registrasi']
+
+
+class PengaduanViewSet(viewsets.ModelViewSet):
+    queryset = Pengaduan.objects.all()
+    serializer_class = PengaduanSerializer 
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['judul', 'deskripsi']  # Field pencarian
+    ordering_fields = ['status', 'tanggal_lapor']  # Field sorting
+    ordering = ['-tanggal_lapor']  # Default urutan data   

@@ -9,6 +9,9 @@ from rest_framework import viewsets
 from .serializers import WargaSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter, OrderingFilter 
+from rest_framework.permissions import AllowAny
+
+
 
 class WargaListView(ListView):
     model = Warga
@@ -78,7 +81,7 @@ class WargaViewSet(viewsets.ModelViewSet):
     """
     queryset = Warga.objects.all().order_by('-tanggal_registrasi')
     serializer_class = WargaSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['nama_lengkap', 'nik', 'alamat']
     ordering_fields = ['nama_lengkap', 'tanggal_registrasi']
